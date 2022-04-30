@@ -1,0 +1,73 @@
+{% extends "../base.html" %}
+{% load static %}
+{% block title %}
+{% if category %}
+	{{category.name}}
+{% else %}
+	All Products
+{% endif %}
+{% endblock %}
+{% block content %}
+
+	<!-- Product -->
+	<div class="bg0 m-t-23 p-b-140">
+		<div class="container">
+			<div class="flex-w flex-sb-m p-b-52">
+				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
+                    <a href="{% url "store:store" %}" class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 {% if 'store' in request.path %} how-active1 {% endif %}" data-filter="*">
+                        All Products
+                    </a>
+                    {% for category in categories %}  
+                        <a href="{{category.get_absolute_url}}" class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 {% if category.slug in request.path %} how-active1 {% endif %}" data-filter=".women">
+                            {{category.name|title}}
+                        </a>
+                    {% endfor %}
+				</div>
+			</div>
+
+			<div class="row isotope-grid">
+                {% for product in products %}
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 ">
+					<!-- Block2 -->
+					<div class="block2">
+						<div class="block2-pic hov-img0">
+							<img src="{{ product.image.url }}" alt="{{product.title|title}}">
+
+							<a href="{{product.get_absolute_url}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+								View
+							</a>
+						</div>
+
+						<div class="block2-txt flex-w flex-t p-t-14">
+							<div class="block2-txt-child1 flex-col-l ">
+								<a href="{{product.get_absolute_url}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+									{{product.title|title}}
+								</a>
+
+								<span class="stext-105 cl3">
+									${{product.price}}
+								</span>
+							</div>
+
+							<div class="block2-txt-child2 flex-r p-t-3">
+								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+									<img class="icon-heart1 dis-block trans-04" src="{% static 'images/icons/icon-heart-01.png' %}" alt="ICON">
+									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="{% static 'images/icons/icon-heart-02.png' %}" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+                {% endfor %}
+			</div>
+
+			<!-- Load more -->
+			<div class="flex-c-m flex-w w-full p-t-45">
+				<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+					Load More
+				</a>
+			</div>
+		</div>
+	</div>
+		
+{% endblock %}
